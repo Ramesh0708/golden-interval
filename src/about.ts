@@ -2,7 +2,7 @@ export const about = {
   kicker: 'About',
   headline: 'Life has its good things. They land better with someone like-minded.',
   story:
-    'It was a shared love of melody that bound Sanjeev and Vilas. Born in the early 1960s and raised in Pune, they have spent decades inside Hindi cinema — the songs, the artists, the long evenings that turn into listening sessions. This site is for the people who lived that era, and for anyone meeting it for the first time. The craft still travels.',
+    'It was the shared love of good music that forged a friendship between Sanjeev and Vilas. Born in the early 1960s and hailing from Pune, they have long shared a deep passion for Hindi cinema and its timeless music. Through countless listening sessions they have honoured the artists of the Golden Era. Their books are tributes to those whose craft still echoes.',
   people: [
     {
       name: 'Sanjeev Kunte',
