@@ -520,14 +520,62 @@ h3 {
 }
 
 .radio__speaker {
-  aspect-ratio: 1;
-  border-radius: 50%;
+  overflow: hidden;
+  border-radius: 18px;
   border: 12px solid #2a2118;
-  background:
-    radial-gradient(circle at 50% 50%, #1c1611 30%, #0c0907 70%);
-  display: grid;
-  place-items: center;
+  background: #0c0907;
+  min-height: 220px;
   box-shadow: 0 0 0 8px rgba(228, 188, 98, 0.2), inset 0 0 40px #000;
+}
+
+.radio__deck,
+.radio__host {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 200px;
+  background: #100c09;
+}
+
+.radio__deck iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.about__people {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.about__card {
+  padding: 1.4rem;
+  border: 1px solid rgba(228, 188, 98, 0.22);
+  background: linear-gradient(180deg, rgba(228, 188, 98, 0.06), transparent);
+}
+
+.about__card h3 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.about__role {
+  color: var(--gold);
+  font-style: italic;
+  margin: 0.35rem 0 0.8rem;
+}
+
+.about__card p:last-child {
+  color: var(--mute);
+  margin: 0;
+}
+
+.about__mail {
+  margin-top: 1.6rem;
+  font-style: italic;
+}
+
+.about__mail a {
+  color: var(--gold);
 }
 
 .eq {
@@ -751,7 +799,8 @@ h3 {
   .reels,
   .constellation,
   .radio__set,
-  .projector__grid {
+  .projector__grid,
+  .about__people {
     grid-template-columns: 1fr;
   }
   .sprockets {

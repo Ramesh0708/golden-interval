@@ -184,10 +184,40 @@ export const dialogues = [
 ] as const
 
 export const radioQueue = [
-  { rank: 1, title: 'Aap Ki Nazron Ne Samjha', show: 'Binaca Geetmala' },
-  { rank: 2, title: 'Lag Ja Gale', show: 'Radio Ceylon' },
-  { rank: 3, title: 'Aaj Jaane Ki Zid Na Karo', show: 'Late night, volume low' },
-  { rank: 4, title: 'Tere Bina Zindagi Se', show: 'Request hour' },
-  { rank: 5, title: 'Piya Tose Naina Lage Re', show: 'Classical hour' },
-  { rank: 6, title: 'Dil Ke Jharoke Mein', show: 'Listeners’ choice' },
+  {
+    rank: 1,
+    title: 'Aap Ki Nazron Ne Samjha',
+    show: 'Anpadh · Lata Mangeshkar',
+    youtubeId: 'Z_fQCnxxuRs',
+  },
+  {
+    rank: 2,
+    title: 'Lag Ja Gale',
+    show: 'Woh Kaun Thi · Lata Mangeshkar',
+    youtubeId: 'br6C4U3Dyfo',
+  },
+  {
+    rank: 3,
+    title: 'Aaj Jaane Ki Zid Na Karo',
+    show: 'Farida Khanum · Coke Studio',
+    youtubeId: 'KDJL2FyRDeA',
+  },
+  {
+    rank: 4,
+    title: 'Tere Bina Zindagi Se',
+    show: 'Aandhi · Lata & Kishore',
+    youtubeId: 'EiUDYzqdz2U',
+  },
+  {
+    rank: 5,
+    title: 'Piya Tose Naina Lage Re',
+    show: 'Guide · Lata Mangeshkar',
+    youtubeId: 'Ze0iX-SxwRY',
+  },
+  {
+    rank: 6,
+    title: 'Dil Ke Jharoke Mein',
+    show: 'Brahmachari · Mohammed Rafi',
+    youtubeId: 'zxtp-DuwuGE',
+  },
 ] as const

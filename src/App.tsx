@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { about } from './about.ts'
 import {
   decades,
   dialogues,
@@ -7,6 +8,7 @@ import {
   radioQueue,
   songs,
 } from './data.ts'
+import { RadioPlayer, type RadioHandle } from './RadioPlayer.tsx'
 
 function useReveal() {
   useEffect(() => {
@@ -82,6 +84,7 @@ function Nav({ score, total }: { score: number; total: number }) {
         <a href="#timeline">Reels</a>
         <a href="#people">People</a>
         <a href="#projector">Projector</a>
+        <a href="#about">About</a>
       </nav>
       <div className="nav__meter" title="Nostalgia score">
         Housefull {score}/{total}
@@ -97,6 +100,7 @@ export default function App() {
   const [radioIndex, setRadioIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [activeLine, setActiveLine] = useState(0)
+  const radioRef = useRef<RadioHandle>(null)
 
   useReveal()
 
@@ -106,14 +110,9 @@ export default function App() {
   )
   const radio = radioQueue[radioIndex]
   const dialogue = dialogues[activeLine]
-
-  useEffect(() => {
-    if (!playing) return
-    const id = window.setInterval(() => {
-      setRadioIndex((i) => (i + 1) % radioQueue.length)
-    }, 4200)
-    return () => window.clearInterval(id)
-  }, [playing])
+  const nextRequest = useCallback(() => {
+    setRadioIndex((i) => (i + 1) % radioQueue.length)
+  }, [])
 
   return (
     <div id="top" className={entered ? 'app is-live' : 'app'}>
@@ -135,17 +134,16 @@ export default function App() {
             <em> the magic that still refuses to fade.</em>
           </h1>
           <p className="lede">
-            Your friend’s site is a warm scrapbook. This is the theatre itself:
-            a curtain, a radio, a checklist that remembers you, and a projector
-            that still knows the lines.
+            A tribute to Indian cinema’s golden years — the curtain, the radio,
+            the songs that still play, and a projector that remembers the
+            lines. Whether you grew up in a single-screen or are finding these
+            films now, take a seat.
           </p>
           <div className="hero__row">
             <a className="btn" href="#nostalgia">
               Take your seat
             </a>
-            <p className="hero__aside">
-              Built as a challenge. Stay for the aftertaste.
-            </p>
+            <p className="hero__aside">Stay for the aftertaste.</p>
           </div>
         </div>
       </section>
@@ -204,31 +202,34 @@ export default function App() {
               <button
                 type="button"
                 className={playing ? 'dial is-on' : 'dial'}
-                onClick={() => setPlaying((p) => !p)}
+                onClick={() => {
+                  if (playing) {
+                    radioRef.current?.pause()
+                    setPlaying(false)
+                  } else {
+                    radioRef.current?.play()
+                    setPlaying(true)
+                  }
+                }}
               >
                 {playing ? 'Pause the hour' : 'Start the hour'}
               </button>
-              <button
-                type="button"
-                className="dial"
-                onClick={() =>
-                  setRadioIndex((i) => (i + 1) % radioQueue.length)
-                }
-              >
+              <button type="button" className="dial" onClick={nextRequest}>
                 Next request
               </button>
             </div>
             <p className="fineprint">
-              Titles only — no stolen audio. Put on your own record. We will
-              keep the lights amber.
+              The hour streams public YouTube uploads — originals and official
+              performances. Turn the volume up.
             </p>
           </div>
-          <div className="radio__speaker" aria-hidden="true">
-            <div className={playing ? 'eq is-on' : 'eq'}>
-              {Array.from({ length: 12 }, (_, i) => (
-                <span key={i} style={{ animationDelay: `${i * 0.08}s` }} />
-              ))}
-            </div>
+          <div className="radio__speaker">
+            <RadioPlayer
+              ref={radioRef}
+              videoId={radio.youtubeId}
+              playing={playing}
+              onEnded={nextRequest}
+            />
           </div>
         </div>
       </section>
@@ -310,17 +311,36 @@ export default function App() {
         </div>
       </section>
 
+      <section id="about" className="section about" data-reveal>
+        <header className="section__head">
+          <p className="kicker">{about.kicker}</p>
+          <h2>{about.headline}</h2>
+          <p>{about.story}</p>
+        </header>
+        <div className="about__people">
+          {about.people.map((person) => (
+            <article key={person.name} className="about__card">
+              <h3>{person.name}</h3>
+              <p className="about__role">{person.role}</p>
+              <p>{person.bio}</p>
+            </article>
+          ))}
+        </div>
+        <p className="about__mail">
+          Find us at{' '}
+          <a href={`mailto:${about.email}`}>{about.email}</a>
+        </p>
+      </section>
+
       <footer className="credits">
         <p className="kicker">End credits</p>
-        <h2>This was never going to be a WordPress theme with a sitar still.</h2>
+        <h2>The interval is over. The songs are not.</h2>
         <p>
-          Golden Interval is an original tribute — cinematic, interactive, a
-          little arrogant on purpose. No books for sale. No dead social icons.
-          Just the era, staged the way it deserves.
+          Golden Interval is a tribute to the people, the music, and the
+          single-screen magic of Hindi cinema’s golden years — staged so you
+          can sit with it, not just read about it.
         </p>
-        <p className="credits__small">
-          Made for a dare. 2026. Play it loud. Then play it again.
-        </p>
+        <p className="credits__small">2026. Play it loud. Then play it again.</p>
       </footer>
     </div>
   )
