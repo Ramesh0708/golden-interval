@@ -61,6 +61,29 @@ export const nostalgia = [
   },
 ] as const
 
+export const firstWatch = [
+  {
+    title: 'Pyaasa',
+    year: '1957',
+    why: 'A poet vs the marketplace. If you like films that argue with fame, start here.',
+  },
+  {
+    title: 'Guide',
+    year: '1965',
+    why: 'A woman walks out of a locked life — and the camera lets her. Still startling.',
+  },
+  {
+    title: 'Mughal-e-Azam',
+    year: '1960',
+    why: 'Scale before CGI. One song in a hall of mirrors is a whole thesis on courage.',
+  },
+  {
+    title: 'Pakeezah',
+    year: '1972',
+    why: 'Slow, ornate, heartbroken. Proof that “old” can feel like a fever dream.',
+  },
+] as const
+
 export const decades = [
   {
     year: '1949–54',

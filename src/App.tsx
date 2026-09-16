@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { about } from './about.ts'
+import { book } from './books.ts'
 import {
   decades,
   dialogues,
+  firstWatch,
   icons,
   nostalgia,
   radioQueue,
@@ -53,8 +55,8 @@ function TheatreDoors({ onEnter }: { onEnter: () => void }) {
           <em> Interval</em>
         </h1>
         <p className="doors__sub">
-          A living tribute to Indian cinema’s golden years — not a brochure.
-          Walk in. The lights go down.
+          Hindi cinema, 1949–1975. If you queued for the print, you already
+          know the temperature. If you did not — the songs still work.
         </p>
         {count === null ? (
           <button className="ticket" type="button" onClick={() => setCount(3)}>
@@ -79,11 +81,13 @@ function Nav({ score, total }: { score: number; total: number }) {
         Golden Interval
       </a>
       <nav>
-        <a href="#nostalgia">Nostalgia</a>
+        <a href="#start">Start here</a>
         <a href="#radio">Radio</a>
+        <a href="#nostalgia">If you were there</a>
         <a href="#timeline">Reels</a>
         <a href="#people">People</a>
-        <a href="#projector">Projector</a>
+        <a href="#projector">Lines</a>
+        <a href="#books">Books</a>
         <a href="#about">About</a>
       </nav>
       <div className="nav__meter" title="Nostalgia score">
@@ -100,6 +104,7 @@ export default function App() {
   const [radioIndex, setRadioIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [activeLine, setActiveLine] = useState(0)
+  const [showSample, setShowSample] = useState(false)
   const radioRef = useRef<RadioHandle>(null)
 
   useReveal()
@@ -128,33 +133,56 @@ export default function App() {
         <div className="hero__stage">
           <div className="curtain curtain--left" />
           <div className="curtain curtain--right" />
-          <p className="kicker">1949 — 1975 · The last great interval</p>
+          <p className="kicker">Then and now · Same songs</p>
           <h1>
-            The people, the music,
-            <em> the magic that still refuses to fade.</em>
+            You do not need to have
+            <em> queued in the rain.</em>
           </h1>
           <p className="lede">
-            A tribute to Indian cinema’s golden years — the curtain, the radio,
-            the songs that still play, and a projector that remembers the
-            lines. Whether you grew up in a single-screen or are finding these
-            films now, take a seat.
+            The Golden Era of Hindi cinema still plays — on phones, in cars, at
+            weddings, in the back of a parent’s memory. This is a hall for
+            people who lived it, and a map for anyone arriving late.
           </p>
           <div className="hero__row">
-            <a className="btn" href="#nostalgia">
-              Take your seat
+            <a className="btn" href="#start">
+              I’m new here
             </a>
-            <p className="hero__aside">Stay for the aftertaste.</p>
+            <a className="btn btn--ghost" href="#nostalgia">
+              I remember this
+            </a>
           </div>
+        </div>
+      </section>
+
+      <section id="start" className="section" data-reveal>
+        <header className="section__head">
+          <p className="kicker">First reel</p>
+          <h2>Four films if you have never sat through a golden-era print.</h2>
+          <p>
+            No homework. No insider password. Press play on the radio below,
+            then pick one of these. Each still holds up if you were born after
+            the last single-screen closed.
+          </p>
+        </header>
+        <div className="first-watch">
+          {firstWatch.map((film) => (
+            <article key={film.title} className="first-watch__card">
+              <span>{film.year}</span>
+              <h3>{film.title}</h3>
+              <p>{film.why}</p>
+            </article>
+          ))}
         </div>
       </section>
 
       <section id="nostalgia" className="section" data-reveal>
         <header className="section__head">
-          <p className="kicker">Have you ever</p>
-          <h2>A bingo card for people who grew up in the dark.</h2>
+          <p className="kicker">If you were there</p>
+          <h2>A memory card — optional, not an entrance exam.</h2>
           <p>
-            Tap every memory that is yours. The housefull meter in the corner
-            keeps score — because nostalgia, honestly, is a competitive sport.
+            Grew up with Radio Ceylon and housefull boards? Tap what is yours.
+            Arriving now? Skip this and stay for the music. The era does not
+            ask for your year of birth.
           </p>
         </header>
         <div className="bingo">
@@ -177,12 +205,13 @@ export default function App() {
           })}
         </div>
         <p className="scoreline">
-          {score === 0 && 'The reel is blank. Punch a few holes.'}
-          {score === 1 && '1 hit. You have been in the queue.'}
-          {score > 1 && score < 6 && `${score} hits. You have been in the queue.`}
-          {score >= 6 && score < 10 && `${score} hits. You waited in the rain.`}
+          {score === 0 &&
+            'No ticks? Fine. The first reel above is for you.'}
+          {score === 1 && '1 memory. The rest of the hall is still open.'}
+          {score > 1 && score < 6 && `${score} memories. You have been in the queue.`}
+          {score >= 6 && score < 10 && `${score} memories. You waited in the rain.`}
           {score >= 10 &&
-            `${score} of ${nostalgia.length}. Sit down. This was made for you.`}
+            `${score} of ${nostalgia.length}. You lived it — now play it for someone who didn’t.`}
         </p>
       </section>
 
@@ -190,7 +219,7 @@ export default function App() {
         <div className="radio__set">
           <div className="radio__face">
             <p className="kicker">On air</p>
-            <h2>Radio Ceylon never really signed off.</h2>
+            <h2>Hear it before you study it.</h2>
             <p className="radio__now">
               <span>Now playing</span>
               <strong>
@@ -219,8 +248,8 @@ export default function App() {
               </button>
             </div>
             <p className="fineprint">
-              The hour streams public YouTube uploads — originals and official
-              performances. Turn the volume up.
+              Press start. These tracks still stop a room — on a bus, in
+              headphones, or on a Sunday radio. YouTube streams the originals.
             </p>
           </div>
           <div className="radio__speaker">
@@ -237,7 +266,7 @@ export default function App() {
       <section id="timeline" className="section" data-reveal>
         <header className="section__head">
           <p className="kicker">The reels</p>
-          <h2>Four acts. One country learning to dream in 24 frames.</h2>
+          <h2>Four acts. A country learning to dream in 24 frames.</h2>
         </header>
         <div className="reels">
           {decades.map((d) => (
@@ -253,7 +282,7 @@ export default function App() {
       <section id="people" className="section" data-reveal>
         <header className="section__head">
           <p className="kicker">Constellation</p>
-          <h2>Not a Wikipedia dump. A dressing room of ghosts who still work.</h2>
+          <h2>Faces you already know — even if you do not know why.</h2>
         </header>
         <div className="constellation">
           {icons.map((person) => (
@@ -269,7 +298,7 @@ export default function App() {
       <section id="songs" className="section" data-reveal>
         <header className="section__head">
           <p className="kicker">The songbook</p>
-          <h2>Six tracks that still rearrange a room.</h2>
+          <h2>Six tracks that still rearrange a room — any decade.</h2>
         </header>
         <ol className="songbook">
           {songs.map((s, i) => (
@@ -311,6 +340,53 @@ export default function App() {
         </div>
       </section>
 
+      <section id="books" className="section books" data-reveal>
+        <header className="section__head">
+          <p className="kicker">{book.kicker}</p>
+          <h2>{book.title}</h2>
+          <p>{book.subtitle}</p>
+        </header>
+        <div className="books__layout">
+          <div className="books__cover">
+            <img src={book.coverUrl} alt={`${book.title} sample cover`} />
+          </div>
+          <div className="books__copy">
+            <p>{book.blurb}</p>
+            <ul>
+              {book.highlights.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <div className="books__actions">
+              <button
+                type="button"
+                className="btn"
+                onClick={() => setShowSample(true)}
+              >
+                View sample
+              </button>
+              <a className="btn btn--ghost" href={book.sampleUrl} target="_blank" rel="noreferrer">
+                Open sample PDF
+              </a>
+              <a className="btn btn--ghost" href={book.songsUrl} target="_blank" rel="noreferrer">
+                Songs in this book
+              </a>
+              <a className="btn btn--ghost" href={book.reviewsUrl} target="_blank" rel="noreferrer">
+                Reviews
+              </a>
+            </div>
+          </div>
+        </div>
+        {showSample && (
+          <div className="books__sample">
+            <iframe
+              title={`${book.title} sample pages`}
+              src={`${book.sampleUrl}#view=FitH`}
+            />
+          </div>
+        )}
+      </section>
+
       <section id="about" className="section about" data-reveal>
         <header className="section__head">
           <p className="kicker">{about.kicker}</p>
@@ -336,9 +412,9 @@ export default function App() {
         <p className="kicker">End credits</p>
         <h2>The interval is over. The songs are not.</h2>
         <p>
-          Golden Interval is a tribute to the people, the music, and the
-          single-screen magic of Hindi cinema’s golden years — staged so you
-          can sit with it, not just read about it.
+          Golden Interval is a hall for two kinds of listener: the ones who
+          waited in the rain, and the ones who just pressed play. Same songs.
+          Same era. No age on the ticket.
         </p>
         <p className="credits__small">2026. Play it loud. Then play it again.</p>
       </footer>

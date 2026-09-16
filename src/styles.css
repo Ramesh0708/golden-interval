@@ -5,7 +5,7 @@
   --gold-2: #b8862a;
   --wine: #7a2433;
   --dust: #c9b89a;
-  --mute: rgba(244, 231, 200, 0.62);
+  --mute: rgba(244, 231, 200, 0.78);
   --serif: 'Cormorant Garamond', Georgia, serif;
   --body: 'Libre Baskerville', Georgia, serif;
   --sans: 'Yantramanav', system-ui, sans-serif;
@@ -26,7 +26,8 @@ body {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--body);
-  line-height: 1.55;
+  font-size: 1.05rem;
+  line-height: 1.65;
 }
 
 button,
@@ -228,6 +229,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  flex-wrap: wrap;
   padding: 0.85rem 2.4rem;
   background: linear-gradient(to bottom, rgba(16, 12, 9, 0.92), rgba(16, 12, 9, 0.55));
   backdrop-filter: blur(10px);
@@ -257,14 +259,15 @@ h3 {
 
 .nav nav {
   display: flex;
-  gap: 1.15rem;
+  gap: 1rem 1.15rem;
+  flex-wrap: wrap;
 }
 
 .nav a {
   color: var(--dust);
   text-decoration: none;
   font-family: var(--sans);
-  font-size: 0.92rem;
+  font-size: 1rem;
 }
 
 .nav a:hover {
@@ -359,7 +362,14 @@ h3 {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.85rem 1.3rem;
+  padding: 0.95rem 1.35rem;
+  font-size: 0.92rem;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
 }
 
 .hero__aside {
@@ -398,6 +408,37 @@ h3 {
 [data-reveal].is-in {
   opacity: 1;
   transform: none;
+}
+
+.first-watch {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+}
+
+.first-watch__card {
+  padding: 1.3rem 1.15rem 1.5rem;
+  border: 1px solid rgba(228, 188, 98, 0.22);
+  background: linear-gradient(180deg, rgba(228, 188, 98, 0.08), transparent);
+  min-height: 14rem;
+}
+
+.first-watch__card span {
+  font-family: var(--sans);
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+}
+
+.first-watch__card h3 {
+  margin: 0.45rem 0 0.7rem;
+  font-size: 1.65rem;
+}
+
+.first-watch__card p {
+  margin: 0;
+  color: var(--mute);
+  font-size: 1rem;
 }
 
 .bingo {
@@ -764,6 +805,54 @@ h3 {
   border-color: var(--gold);
 }
 
+.books__layout {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 1.6rem;
+  align-items: start;
+}
+
+.books__cover img {
+  width: 100%;
+  display: block;
+  border: 1px solid rgba(228, 188, 98, 0.28);
+  background: #1a140f;
+}
+
+.books__copy p {
+  color: var(--mute);
+  margin-top: 0;
+}
+
+.books__copy ul {
+  margin: 0 0 1.4rem;
+  padding-left: 1.15rem;
+  color: var(--mute);
+}
+
+.books__copy li {
+  margin-bottom: 0.45rem;
+}
+
+.books__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.books__sample {
+  margin-top: 1.6rem;
+  border: 1px solid rgba(228, 188, 98, 0.28);
+  min-height: 70vh;
+  background: #0b0806;
+}
+
+.books__sample iframe {
+  width: 100%;
+  height: 70vh;
+  border: 0;
+}
+
 .credits {
   padding: 5rem 8vw 6rem;
   text-align: center;
@@ -793,14 +882,16 @@ h3 {
 }
 
 @media (max-width: 960px) {
-  .nav nav {
-    display: none;
+  .nav {
+    padding: 0.75rem 1rem;
   }
+  .first-watch,
   .reels,
   .constellation,
   .radio__set,
   .projector__grid,
-  .about__people {
+  .about__people,
+  .books__layout {
     grid-template-columns: 1fr;
   }
   .sprockets {
